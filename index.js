@@ -1,6 +1,8 @@
 Core.setWorkerPath('./webviewer-lib/core');
 
 const mergeImage = async () => {
+  const startTime = performance.now();
+
   const initialDocument = await Core.createDocument('./images/file_example_JPG_1MB.jpg', { loadAsPDF: true });
 
   for (let i = 0; i < 40; i++) {
@@ -15,6 +17,8 @@ const mergeImage = async () => {
   const data = new Uint8Array(fileData);
   const blobData = new Blob([data], { type: 'application/pdf' });
   saveAs(blobData, 'merged.pdf');
+
+  console.log(`Time taken: ${performance.now() - startTime}`);
 };
 
 mergeImage();
